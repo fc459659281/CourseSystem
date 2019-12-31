@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>添加课程</title>
+    <link rel="stylesheet" href="css/student.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/IP.js"></script>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet">
+    <style>
+        .main_boby {
+            padding-top: 100px;
+            background-color: white;
+        }
+
+        .div_1 {
+
+            width: 400px;
+            height: 500px;
+            background-color: white;
+        }
+
+        .text_1 {
+            border-radius: 15px;
+            width: 250px;
+            height: 50px;
+            background-color: aliceblue;
+        }
+
+        .b_1 {
+            width: 100px;
+            height: 40px;
+
+        }
+    </style>
+</head>
+
+<body class="baby">
+    <div class="header">
+        <p font="size:12px">添加课程信息</p>
+    </div>
+    <center>
+        <div align="center">
+            <form>                                                
+                <br />
+                您要为哪个专业添加课程<select id="major">
+                  <option>计算机科学与技术</option>
+                  <option>软件工程</option>
+                  <option>数字媒体技术</option>
+                  <option>网络工程</option>
+          </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+          <br>
+          <br>
+          </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                课程名<input type="text" name="name" id="name"/>
+                <br />
+                <br />
+                起始周<select id="startweek">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                  <option>9</option>
+                  <option>10</option>
+                  <option>11</option>
+                  <option>12</option>
+                  <option>13</option>
+                  <option>14</option>
+                  <option>15</option>
+                  <option>16</option>
+                  <option>17</option>
+                  <option>18</option>
+                  <option>19</option>
+                  <option>20</option>
+          </select>&nbsp&nbsp&nbsp&nbsp
+                <br />
+                结束周<select id="endweek">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                  <option>9</option>
+                  <option>10</option>
+                  <option>11</option>
+                  <option>12</option>
+                  <option>13</option>
+                  <option>14</option>
+                  <option>15</option>
+                  <option>16</option>
+                  <option>17</option>
+                  <option>18</option>
+                  <option>19</option>
+                  <option>20</option>
+          </select>&nbsp&nbsp&nbsp&nbsp
+                <br />
+                星期：<select id="week">
+                    <option>星期一</option>
+                    <option>星期二</option>
+                    <option>星期三</option>
+                    <option>星期四</option>
+                    <option>星期五</option>
+            </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                <br />
+                时间：<select id="time">
+                    <option>8:00-10:00</option>
+                    <option>10:00-12:00</option>
+                    <option>14:00-16:00</option>
+                    <option>16:00-18:00</option>
+            </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                <br />
+                教室号<select id="classroom">
+                    <option>A110</option>
+                    <option>A111</option>
+                    <option>A112</option>
+                    <option>A113</option>
+                    <option>A114</option>
+                    <option>A115</option>
+                    <option>A116</option>
+            </select>&nbsp&nbsp&nbsp&nbsp
+                  <br />
+                授课教师：<input type="text" name="teacher"id="teacher" />
+                <br>
+            <input type="button" value="确定" id="determine"/>
+            <input type="reset" value="重置" />
+            <br>
+            <br>
+            <br>
+           <button type="button" class="btn btn-primary"style="margin-left:0px"id="home">返回管理员界面</button>
+        </div>
+    </center>
+</body>
+<script>
+    $('#home').click(function(){
+  window.location.href ="manager.html";
+})
+    $('#determine').click(function(){
+        var x=parseInt($('#startweek').val())
+        var y=parseInt($('#endweek').val())
+     console.log(typeof ($('#startweek').val()))
+    if($('#name').val()!=""&& $('#classroom').val()!="" && $('#teacher').val()!=""&& x<=y){
+    
+      var data={}
+    data['name']=$('#name').val()
+    data['startweek']=$('#startweek').val()
+    data['endweek']=$('#endweek').val()
+    data['classroom']=$('#classroom').val()
+    data['teacher']=$('#teacher').val()
+    data['time']=$('#time').val()
+    data['major']=$('#major').val()
+    data['week']=$('#week').val()
+    $.ajax({
+    type:"post",
+    url:IP+'class_insert',
+    dataType:"text",
+    data:data,
+    success:function(result){
+        var x=JSON.parse(result)
+    
+     alert(x.msg)
+
+  },
+  error:function(){
+      console.log(123)
+  }
+}) 
+    }else{
+        alert("请确保信息填写完整，或起始周数据有误")
+    }
+    })
+    
+  
+
+</script>
+
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>教室</title>
+  <script src="js/jquery.js"></script>
+  <script src="js/IP.js"></script>
+  <link rel="stylesheet" href="css/student.css">
+</head>
+
+<body>
+  <div class="header" type="none">
+    <a href="manager.html">返回首页</a>
+  </div>
+  <div class="d_1">
+
+    <div class="d_2">
+      <p>教室状态查询</p>
+    </div>
+  </div>
+  周数<select id="week">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+    <option>6</option>
+    <option>7</option>
+    <option>8</option>
+    <option>9</option>
+    <option>10</option>
+    <option>11</option>
+    <option>12</option>
+    <option>13</option>
+    <option>14</option>
+    <option>15</option>
+    <option>16</option>
+    <option>17</option>
+    <option>18</option>
+    <option>19</option>
+    <option>20</option>
+  </select>&nbsp&nbsp&nbsp&nbsp
+  星期：<select id="date">
+    <option>星期一</option>
+    <option>星期二</option>
+    <option>星期三</option>
+    <option>星期四</option>
+    <option>星期五</option>
+  </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+  时间：<select id="time">
+    <option>8:00-10:00</option>
+    <option>10:00-12:00</option>
+    <option>14:00-16:00</option>
+    <option>16:00-18:00</option>
+  </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+  <br />
+  </div>
+  <br>
+  <br>
+  <table class="table_one" border="1">
+    <tr>
+      <th>教室名称</th>
+      <th> 状态</th>
+    </tr>
+    <tr>
+
+      <td><a id="class_name1">暂无课程</a></td>
+      <td><a id="time1"> </a></td>
+
+    </tr>
+    <tr>
+      <td><a id="class_name2">暂无课程</a></td>
+      <td><a id="time2"></a> </td>
+
+    </tr>
+    <tr>
+
+      <td><a id="class_name3">暂无课程</td>
+      <td><a id="time3"></a></td>
+
+    </tr>
+    <tr>
+
+      <td><a id="class_name4">暂无课程</td>
+      <td><a id="time4"></a></td>
+
+    </tr>
+    <tr>
+
+      <td><a id="class_name5">暂无课程</a></td>
+      <td><a id="time5"></a></td>
+
+    </tr>
+    <tr>
+
+      <td><a id="class_name6">暂无课程</a></td>
+      <td><a id="time6"> </a></td>
+
+    </tr>
+    <tr>
+
+      <td><a id="class_name7">暂无课程</a></td>
+      <td><a id="time7"> </a></td>
+
+    </tr>
+    <tr>
+
+    </tr>
+
+  </table>
+  <div align="center">
+    <input class="b_1" type="button" id="query" value="查询"></input>
+  </div>
+</body>
+<script>
+  $('#query').click(function () {
+    var data = {}
+    data['week'] = $('#week').val()
+    data['date'] = $('#date').val()
+    data['time'] = $('#time').val()
+    $.ajax({
+      type: "post",
+      url: IP + 'classroom_query',
+      dataType: "text",
+      data: data,
+      success: function (result) {
+        var x = JSON.parse(result)
+        console.log(x)
+        query(x)
+      },
+      error: function () {
+        console.log(1)
+      }
+    })
+  }
+  )
+  function query(x) {
+    var classname = "class_name"
+    var time = "time"
+    var arr = ["1", "2", "3", "4", "5", "6", "7"]
+    var classroom=[]
+    var msg1=[]
+    if (x.data1 == undefined) {
+
+      for (var i = 0; i < x.data.length; i++) {
+        var p1 = document.getElementById("class_name" + arr[i]);
+        p1.innerHTML = x.data[i].classroom_name
+        var p2 = document.getElementById("time" + arr[i]);
+        p2.innerHTML = x.msg
+      }
+    } else {
+      for (var i = 0; i < x.data.length; i++) {
+        for (var j = 0; j < x.data1.length; j++) {
+          if (x.data[i].classroom_name == x.data1[j].classroom_name) {
+            classroom[j] = x.data[i].classroom_name
+            msg1[j] = x.msg
+          } else {
+            if (classroom[j] != undefined) {
+              continue
+            }
+           classroom[j] = x.data1[j].classroom_name
+            msg1[j] = x.msg1
+          }
+        }
+      }
+     
+    }
+    for (var w = 0; w < classroom.length; w++) {
+    var p1 = document.getElementById("class_name" + arr[w]);
+    p1.innerHTML = classroom[w]
+    var p2 = document.getElementById("time" + arr[w]);
+    p2.innerHTML = msg1[w]
+  }
+ 
+
+  } 
+</script>
+
+</html>

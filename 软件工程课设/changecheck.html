@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>修改学生信息</title>
+        <script src="js/jquery.js"></script>
+        <script src="js/IP.js"></script>
+        <link rel="stylesheet" href="css/am.css">
+    </head>
+
+    <body class="text-center">
+        <div class="header" type="none">
+            <a href="manager.html" class="a_1" >返回管理员主页</a>
+            </a>  
+        </div>
+        <div align="center">
+            <form>
+                <br />
+                <br />
+                请输入要修改的学号：<input type="text" name="alsno" id="sno" />
+                <br />
+                <br />
+                请输入要修改的姓名：<input type="text" name="alname" id="name" />
+                <br />
+                <br />
+                
+            </form>
+            <input type="button" value="确定" id="alert"/>&nbsp&nbsp&nbsp&nbsp
+                <input type="reset" value="取消" />
+        </div>
+  </body>
+  <script>
+    $("#alert").click(async function (e) {
+    if(!$('#alsno')||!$('#alname')){
+        alert("学号或姓名不能为空")
+    }else{
+      var data={}
+    data['sno']=$('#sno').val()
+    data['name']=$('#name').val()
+    $.ajax({
+    type:"post",
+    url:IP+'changecheck',
+    dataType:"text",
+    data:data,
+    success:function(result){
+        var x=JSON.parse(result) 
+         if(x.status==-1){
+           alert(x.msg)
+         }else{
+          window.location.href ="change.html";
+          localStorage.setItem("sno",x.sno)
+         }
+     
+  },
+  error:function(){
+      console.log(123)
+  }
+}) 
+    }  })
+   </script>
+</html>

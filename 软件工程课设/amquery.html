@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>课表</title>
+    <script src="js/jquery.js"></script>
+    <script src="js/IP.js"></script>
+    <link rel="stylesheet" href="css/student.css">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="header" type="none">
+     <div>课表</div>
+    </div>
+    <div class="d_1">
+    </div>
+    <div style="margin-left: 600px;">专业<select id="major" style="margin-left:50px;">
+        <option>计算机科学与技术</option>
+        <option>软件工程</option>
+        <option>网络工程</option>
+        <option>数字媒体技术</option>
+    </select>&nbsp&nbsp&nbsp&nbsp
+</div>
+    <br>
+    <br>
+    <table class="table_one" border="1">
+        <tr>
+            <th>课程名称</th>
+            <th>课程时间</th>
+            <th>课程起始周</th>
+            <th>课程结束周</th>
+            <th>授课教师</th>
+            <th>教室</th>
+            <th>上课人数</th>
+        </tr>
+        <tr>
+
+            <td><a id="class_name1">暂无课程</a></td>
+            <td><a id="time1"> </a></td>
+            <td><a id="startweek1"> </a></td>
+            <td><a id="endweek1"> </a></td>
+            <td><a id="teacher1"> </a></td>
+            <td><a id="classroom1"> </a></td>
+            <td><a id="people1"> </a></td>
+        </tr>
+        <tr>
+            <td><a id="class_name2">暂无课程</a></td>
+            <td><a id="time2"></a> </td>
+            <td><a id="startweek2"> </a></td>
+            <td><a id="endweek2"> </a></td>
+            <td><a id="teacher2"> </a></td>
+            <td><a id="classroom2"> </a></td>
+            <td><a id="people2"> </a></td>
+        </tr>
+        <tr>
+
+            <td><a id="class_name3">暂无课程</td>
+            <td><a id="time3"></a></td>
+            <td><a id="startweek3"></a></td>
+            <td><a id="endweek3"></a></td>
+            <td><a id="teacher3"></a></td>
+            <td><a id="classroom3"></a></td>
+            <td><a id="people3"> </a></td>
+        </tr>
+        <tr>
+
+            <td><a id="class_name4">暂无课程</td>
+            <td><a id="time4"></a></td>
+            <td><a id="startweek4"></a></td>
+            <td><a id="endweek4"></a></td>
+            <td><a id="teacher4"></a></td>
+            <td><a id="classroom4"></a></td>
+            <td><a id="people4"> </a></td>
+        </tr>
+        <tr>
+
+            <td><a id="class_name5">暂无课程</a></td>
+            <td><a id="time5"></a></td>
+            <td><a id="startweek5"></a></td>
+            <td><a id="endweek5"></a></td>
+            <td><a id="teacher5"></a></td>
+            <td><a id="classroom5"></a></td>
+            <td><a id="people5"> </a></td>
+        </tr>
+
+        <tr>
+
+            <td><a id="class_name6">暂无课程</a></td>
+            <td><a id="time6"></a></td>
+            <td><a id="startweek6"></a></td>
+            <td><a id="endweek6"></a></td>
+            <td><a id="teacher6"></a></td>
+            <td><a id="classroom6"></a></td>
+            <td><a id="people6"> </a></td>
+        </tr>
+
+        <tr>
+
+            <td><a id="class_name7">暂无课程</a></td>
+            <td><a id="time7"></a></td>
+            <td><a id="startweek7"></a></td>
+            <td><a id="endweek7"></a></td>
+            <td><a id="teacher7"></a></td>
+            <td><a id="classroom7"></a></td>
+            <td><a id="people7"> </a></td>
+        </tr>
+   
+    </table>
+    <div align="center">
+        <br>
+   <br>
+   
+        <input class="b_1" type="button" id="query" value="查询"></input>
+        <input class="b_1" type="button" id="back" value="返回"></input>
+    </div>
+    </body>
+    <script>
+        $('#back').click(function(){
+            window.location.href ="manager.html";
+        })
+        
+  $('#query').click(function () {
+		var data = {}
+		data['major'] =$('#major').val()
+		$.ajax({
+			type: "post",
+			url: IP + 'class_query',
+			dataType: "text",
+			data: data,
+			success: function (result) {
+                var x = JSON.parse(result)
+                if(x==""){
+                    alert("该专业当前没有课程,请添加后重试")
+                    window.location.href="amquery.html"
+                }else{
+                    query(x.data)
+                    query1(x)
+
+                }
+                
+				
+			},
+			error: function () {
+				console.log()
+			}
+		})
+	}
+    )
+    function query1(x){
+        var arr1=["1","2","3","4","5","6","7"]
+        var people="people"
+        for(var j=0;j<arr1.length;j++){
+           if(x.data[j]==undefined){
+               j=0;
+               break
+           }
+        var p = document.getElementById(people+arr1[j]);
+        p.innerHTML = x.count
+        }    
+}
+function query(x){
+  var i=0
+  var arr=["1","2","3","4","5","6","7"]
+  var classname="class_name"
+  var time="time"
+  var startweek="startweek"
+  var endweek="endweek"
+  var teacher="teacher"
+  var classroom="classroom"
+  for(;i<arr.length;i++){
+    if(x[i]==undefined){
+         i=0;
+         break;
+    }
+    var p = document.getElementById(classname+arr[i]);
+    p.innerHTML = x[i].class_name
+    
+  }
+  for(;i<arr.length;i++){
+    if(x[i]==undefined){
+        i=0;
+         break;
+    }
+    var p = document.getElementById(time+arr[i]);
+    if(x[i].week2==" "){
+        p.innerHTML = x[i].week1+":"+x[i].time1
+    }else{
+        p.innerHTML = x[i].week1+":"+x[i].time1+"——"+x[i].week2+":"+x[i].time2
+    }
+    
+    
+  }
+
+ 
+
+for(;i<arr.length;i++){
+    if(x[i]==undefined){
+        i=0;
+         break;
+    }
+    var p = document.getElementById(startweek+arr[i]);
+    p.innerHTML = x[i].start_week
+    
+  }
+
+  for(;i<arr.length;i++){
+    if(x[i]==undefined){
+        i=0;
+         break;
+    }
+    var p = document.getElementById(endweek+arr[i]);
+    p.innerHTML = x[i].end_week
+    
+  }
+
+  for(;i<arr.length;i++){
+    if(x[i]==undefined){
+        i=0;
+         break;
+    }
+    var p = document.getElementById(classroom+arr[i]);
+    p.innerHTML = x[i].classroom
+    
+  }
+
+  for(;i<arr.length;i++){
+    if(x[i]==undefined){
+        i=0;
+         break;
+    }
+    var p = document.getElementById(teacher+arr[i]);
+    p.innerHTML = x[i].teacher
+   
+  }
+} 
+    </script>
+</html>

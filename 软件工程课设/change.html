@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改学生信息</title>
+    <script src="js/jquery.js"></script>
+    <script src="js/IP.js"></script>
+    <link rel="stylesheet" href="css/am.css">
+</head>
+<body>
+    <div class="header" type="none">
+        <a class="a_1" >学生信息修改</a>
+    </div>
+    <div align="center">
+        <form>
+            <br/>
+            姓名：<input type="text" name="name" id="name"/>
+            <br/>
+            <br/>
+        专业：<select id="major">
+                <option>计算机科学与技术</option>
+                <option>软件工程</option>
+                <option>数字媒体技术</option>
+                <option>网络工程</option>
+            </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+             <br/>
+             <br/>
+        年级：<select id="grade">
+                <option>15</option>
+                <option>16</option>
+                <option>17</option>
+                <option>18</option>
+            </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            <br>
+            <br>
+        班级：<select id="class">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+        <br>
+        <br> 
+       </form>       
+        <input type="button" value="确定"  id="alert1"/>&nbsp&nbsp
+        <input type="reset" value="重置" />
+         <br>
+         <br>
+         <button type="button" class="btn btn-primary"style="margin-left:0px"id="home">返回主页</button>
+    </div>
+</body>
+<script>
+    $('#home').click(function(){
+        window.location.href ="manager.html";
+    })
+$("#alert1").click(async function (e) {
+    if($('#name').val()!=""){
+     var data={}
+    data['major']=$('#major').val()
+    data['name']=$('#name').val()
+    data['class']=$('#class').val()
+    data['grade']=$('#grade').val()
+    data['sno']=localStorage.getItem('sno')
+    console.log(data)
+    $.ajax({
+    type:"post",
+    url:IP+'change',
+    dataType:"text",
+    data:data,
+    success:function(result){
+        var x=JSON.parse(result)
+        console.log(x)
+        alert(x.msg)
+  },
+  error:function(){
+      console.log(123)
+  }
+}) 
+    }else{
+        alert("请确保信息填写完整")
+    }
+  })
+</script>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>删除学生信息</title>
+        <script src="js/jquery.js"></script>
+        <script src="js/IP.js"></script>
+        <link rel="stylesheet" href="css/am.css">
+    </head>
+
+    <body class="text-center">
+        <div class="header" type="none">
+            <a href="manager.html" class="a_1" >返回管理员主页</a>
+            </a>  
+        </div>
+        <div align="center">
+            <form>
+                <br />
+                <br />
+                请输入要删除的学号：<input type="text" name="sno" id="sno" />
+                <br />
+                <br />
+                请输入要删除的姓名：<input type="text" name="name" id="name"/>
+                <br />
+                <br />
+                <input type="button" value="删除" id="delete"/>&nbsp&nbsp&nbsp&nbsp
+                <input type="reset" value="取消" />
+            </form>
+        </div>
+  </body>
+  <script>
+   $("#delete").click(async function (e) {
+   if(!$('#desno')||!$('#dename')){
+       alert("学号或姓名不能为空")
+   }else{
+     var data={}
+     data['sno']=$('#sno').val()
+     data['name']=$('#name').val()
+    $.ajax({
+    type:"post",
+    url:IP+'delete',
+    dataType:"text",
+    data:data,
+    success:function(result){
+        var x=JSON.parse(result) 
+        console.log(x)
+         alert(x.msg)
+     
+  },
+  error:function(){
+      console.log(123)
+  }
+})
+   }
+   })
+  </script>
+</html>

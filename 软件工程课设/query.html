@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>查询学生信息</title>
+  <script src="js/jquery.js"></script>
+  <script src="js/IP.js"></script>
+  <link rel="stylesheet" href="css/am.css">
+</head>
+
+<body class="text-center" align="center">
+  <div class="header" type="none">
+    <a href="manager.html" class="a_1">返回管理员首页</a>
+  </div>
+  <table border="1" width=100%>
+    <tr>
+      <th>姓名</th>
+      <th>学号</th>
+      <th>专业</th>
+      <th>班级</th>
+      <th>年级</th>
+    </tr>
+    <tr>
+
+      <td>
+        <p id="name"></p>
+      </td>
+      <td>
+        <p id="sno"></p>
+      </td>
+      <td>
+        <p id="major"></p>
+      </td>
+      <td>
+        <p id="class"></p>
+      </td>
+      <td>
+        <p id="grade"></p>
+      </td>
+    </tr>
+  </table>
+  <div class="foot">
+    <br />
+    <br />
+    <input type="button" value="查询" id="x" />
+  </div>
+</body>
+<script>
+  var a;
+  $('#x').click(function () {
+    var sno = prompt("请输入你要查询的学生学号:", "");
+    var data = {}
+    data['sno'] = sno
+    console.log(data)
+    $.ajax({
+      type: "post",
+      url: IP + 'query',
+      dataType: "text",
+      data: data,
+      success: function (result) {
+        var x = JSON.parse(result)
+        console.log(x)
+        if(x.status==-1){
+          alert(x.msg)
+          window.location.href="query.html"
+        }else{
+        var p = document.getElementById('name');
+        p.innerHTML = x[0].name
+        var p1 = document.getElementById('sno');
+        p1.innerHTML = x[0].sno
+        var p2 = document.getElementById('major');
+        p2.innerHTML = x[0].major
+        var p3 = document.getElementById('class');
+        p3.innerHTML = x[0].class
+        var p4 = document.getElementById('grade');
+        p4.innerHTML = x[0].grade
+        }
+        
+
+      },
+      error: function () {
+        console.log(1)
+      }
+    })
+
+
+
+
+
+
+  })
+
+</script>
+
+</html>

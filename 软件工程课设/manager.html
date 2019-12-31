@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/manager.css">
+</head>
+<body>
+    <div class="header">
+      <p>欢迎来到管理员页面</p>
+      <a href="login.html">退出</a>
+    </div>
+    <div class="content">
+      <div class="left_content">
+        <div class="man">
+          <p style="margin-bottom: 35px;font-size: 30px;">管理员操作</p>
+          <div>
+            <div class="item">
+                <div id='i1' class="header"  onclick="ChangeMenu('i1'); style">学生信息管理</div>
+                <div class="content">
+                    <div><p><a href="changecheck.html">更改学生信息</a></p></div>
+                    <div> <p><a href="delete.html">删除学生信息</a></p></div>
+                    <div> <p><a href="query.html">查询学生信息</a></p></div>
+                </div>
+            </div>
+            <div class="item">
+              <div id='i2' class="header" onclick="ChangeMenu('i2');">课程信息管理</div>
+                <div class="content hide">
+                    <div> <p><a href="amquery.html">查询专业课表</a></p></div>
+                    <div><p><a href="class_insert.html">添加专业课程</a></p></div>
+                    <div><p><a href="class_delete.html">删除课程信息</a></p></div>
+                </div>
+            </div>
+            <div class="item">
+                <div id='i3' class="header" onclick="ChangeMenu('i3');">教室信息管理</div>
+                <div class="content hide">
+                    <div><p><a href="classroomquery.html">教室状态查询</a></p></div>
+                </div>
+            </div>     
+        </div>
+        </div>
+      </div>
+      <div class="right_content">
+        <img src="img/timg.jpg" style="width:900px;height: 500px;">
+      </div>
+    </div>
+    <script>
+       function ChangeMenu(nid) {
+            var current_header = document.getElementById(nid);
+            var item_list =  current_header.parentElement.parentElement.children;
+
+            for(var i = 0;i < item_list.length;i++)
+            {
+                var current_item = item_list[i];
+                current_item.children[1].classList.add('hide');
+            }
+
+            current_header.nextElementSibling.classList.remove('hide');
+        }
+    </script>
+</body>
+</html>
